@@ -17,6 +17,8 @@ func main() {
 	http.Handle("/query", &relay.Handler{Schema: schema})
 	// TODO: init model
 	// TODO: graphiql
+	activateGraphiql()
+
 	// Run
 	log.Println("Server ready at 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
