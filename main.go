@@ -1,12 +1,10 @@
 package main
 
 import (
-	"context"
 	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	"log"
 	"net/http"
-	"strings"
 )
 
 // Schema
@@ -37,26 +35,9 @@ func strPtr(str string) *string {
 	return &str
 }
 
-type VegetableResolver struct {
-	v *Vegetable
-}
-
-func (r *VegetableResolver) Name() string   { return r.v.name }
-func (r *VegetableResolver) Price() int32   { return int32(r.v.price) }
-func (r *VegetableResolver) Image() *string { return r.v.image }
 
 // TODO: Model
 type query struct{}
-
-// TODO: Resolver
-func (q *query) Vegetable(ctx context.Context, args struct{ Name string }) *VegetableResolver {
-	v, ok := vegetables[strings.ToLower(args.Name)]
-	if ok {
-		return &VegetableResolver{v: &v}
-	}
-	return nil
-}
-
 
 func main() {
 	schema := graphql.MustParseSchema(Schema, &query{})
